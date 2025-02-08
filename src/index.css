@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+
+.fondo {
+    min-height: 100vh;  /* Asegura que ocupe al menos toda la altura de la pantalla */
+    width: 100%;  /* Asegura que ocupe todo el ancho */
+    background-image: url('assets/imagen1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    
+    align-items: center;
+    position: absolute;  /* Garantiza que se extienda a través de la pantalla */
+    top: 0;
+    left: 0;
+}
+
+.appf {
+  min-height: 100vh;  /* Asegura que ocupe al menos toda la altura de la pantalla */
+  width: 100%;  /* Asegura que ocupe todo el ancho */
+  background-image: url('assets/img32.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  
+  align-items: center;
+  position: absolute;  /* Garantiza que se extienda a través de la pantalla */
+  top: 0;
+  left: 0;
+}
+
+.logo {
+    background-image: url('assets/logoe.png');
+    background-size: contain; /* Ajusta la imagen para que se contenga dentro del elemento */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen */
+    width: 350px; /* Ajusta el ancho del logo */
+    height: 340px; /* Ajusta la altura del logo */
+    margin: 0 auto 20px auto; /* Centra el logo y agrega un margen inferior */
+    
+  }
+
+  .img {
+    background-image: url('assets/img.jpg');
+    background-size: contain; /* Ajusta la imagen para que se contenga dentro del elemento */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen */
+    width: 600px; /* Ajusta el ancho de la imagen */
+    height: 600px; /* Ajusta la altura de la imagen */
+    margin: 0 auto; /* Centra horizontalmente */
+    position: relative; /* Cambiado de absoluto a relativo para evitar superposición */
+    
+  }
+  
+
+  .navbar-logo  {
+  background-image: url('assets/logoe.png');
+  background-size: contain; /* Ajusta la imagen para que se contenga dentro del elemento */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Centra la imagen */
+  width: 50px; /* Ajusta el ancho del logo */
+  height: 50px; /* Ajusta la altura del logo */
+  margin: 0 auto 0px auto;
+  float: right; 
+  margin-left: 20px; /* Agregar un margen a la izquierda del logo */
+  }
+  
+
+  @keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  }
+  
+  .animate-slide-in {
+  animation: slide-in 0.5s ease-out;
+  }
+  
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 20%;
+    border-top: 4px solid #3498db;
+    width: 16px;
+    height: 16px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
