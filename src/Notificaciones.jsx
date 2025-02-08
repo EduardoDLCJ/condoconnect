@@ -8,6 +8,10 @@ const Notificaciones = () => {
     const departamento = localStorage.getItem('departamento');
     const torre = localStorage.getItem('torre');
 
+      useEffect(() => {
+        document.title = "Notificaciones";
+      }, []);
+
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
