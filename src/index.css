@@ -2,17 +2,18 @@
 
 
 .fondo {
-    min-height: 100vh;  /* Asegura que ocupe al menos toda la altura de la pantalla */
-    width: 100%;  /* Asegura que ocupe todo el ancho */
-    background-image: url('assets/imagen1.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    
-    align-items: center;
-    position: absolute;  /* Garantiza que se extienda a través de la pantalla */
-    top: 0;
-    left: 0;
+  min-height: 100vh;  /* Asegura que ocupe al menos toda la altura de la pantalla */
+  width: 100%;  /* Asegura que ocupe todo el ancho */
+  background-image: url('assets/imagen1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed; /* Evita que la imagen se desplace al hacer scroll */
+  display: flex;
+  
+  align-items: center;
+  position: absolute;  /* Garantiza que se extienda a través de la pantalla */
+  top: 0;
+  left: 0;
 }
 
 .appf {
@@ -22,7 +23,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
-  
+  background-attachment: fixed;
   align-items: center;
   position: absolute;  /* Garantiza que se extienda a través de la pantalla */
   top: 0;

@@ -30,7 +30,7 @@
   transition: background 0.3s ease-in-out;
 }
 
-button:hover {
+.btn:hover {
   background: #0056b3;
 }
 
