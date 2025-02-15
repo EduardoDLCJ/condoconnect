@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const Usuarios = () => {
     const [formData, setFormData] = useState({
@@ -11,11 +12,12 @@ const Usuarios = () => {
         tipoUsuario: 'Administrador',
         contrasena: ''
     });
-
+    const navigate = useNavigate();
     const [usuarios, setUsuarios] = useState([]);
     const [showForm, setShowForm] = useState(false); // Controla si el modal está visible
     const [currentPage, setCurrentPage] = useState(1); // Página actual
     const itemsPerPage = 5; // Número de elementos por página
+    const token = localStorage.getItem('authToken');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,6 +33,7 @@ const Usuarios = () => {
             const response = await fetch('https://apicondominio-7jd1.onrender.com/registro', {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
@@ -47,7 +50,7 @@ const Usuarios = () => {
                 contrasena: ''
             });
             setShowForm(false); 
-             await fetchUsuarios();
+            
         } catch (error) {
             console.error('Error:', error);
         }
@@ -56,7 +59,24 @@ const Usuarios = () => {
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const response = await fetch('https://apicondominio-7jd1.onrender.com/users');
+                //const token = localStorage.getItem('authToken'); // O como almacenes el token
+                const response = await fetch('https://apicondominio-7jd1.onrender.com/users', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.estatus === 401){
+                    localStorage.removeItem('authToken');
+                    navigate('/');
+                    return;
+                }
+                if (!response.ok) {
+                    throw new Error('Error al obtener usuarios');
+                }
+    
                 const data = await response.json();
                 setUsuarios(data);
                 console.log(data);
@@ -66,6 +86,7 @@ const Usuarios = () => {
         };
         fetchUsuarios();
     }, []);
+    
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;

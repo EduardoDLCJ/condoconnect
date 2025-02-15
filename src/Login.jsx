@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
-import loadingAnimation from './assets/Animation - 1738769995911.json'; // Asegúrate de descargar un archivo JSON de Lottie y guardarlo en tu proyecto
+import loadingAnimation from './assets/Animation - 1738769995911.json';
 
 const Login = ({ onLogin }) => {
   const [telefono, setTelefono] = useState('');
@@ -42,35 +42,42 @@ const Login = ({ onLogin }) => {
 
       if (response.ok) {
         console.log('Inicio de sesión exitoso:', data);
-        const { tipoUsuario, departamento, torre } = data.user;
-
-        if (tipoUsuario) {
+        const { token, user } = data;
+      
+        if (user && token) {
+          const { tipoUsuario, departamento, torre } = user;
+      
           localStorage.setItem('departamento', departamento);
           localStorage.setItem('torre', torre);
           localStorage.setItem('userRole', tipoUsuario);
-
+          localStorage.setItem('authToken', token); // Guardar token
+      
+          console.log('tipoUsuario:', tipoUsuario);
+          console.log('token:', token);
+      
           switch (tipoUsuario) {
             case 'Administrador':
+              console.log('Redirigiendo a /Inicio');
               navigate('/Inicio');
               break;
             case 'Dueno':
+              console.log('Redirigiendo a /InicioU');
               navigate('/InicioU');
               break;
             default:
               alert('No tienes permisos para acceder a esta página');
           }
         } else {
-          setLoginError('El campo tipoUsuario no está presente en la respuesta del servidor');
+          setLoginError('Error en la autenticación, intenta de nuevo');
         }
-      } else {
-        setLoginError('Tu nombre de usuario o contraseña son incorrectos');
       }
-    } catch (error) {
+    } catch (error) { 
       console.error('Error al iniciar sesión:', error);
-      setLoginError('Hubo un problema con el servidor, por favor intenta más tarde');
-    } finally {
+      setLoginError('Error al iniciar sesión, intenta de nuevo');
+    } finally { 
       setIsLoading(false);
     }
+
   };
 
   return (
