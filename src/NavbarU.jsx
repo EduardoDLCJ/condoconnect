@@ -39,7 +39,7 @@ const validarUsuario = async () => {
 
   if (!token || !id) {
       console.log('Faltan datos en localStorage');
-      return handleLogout();
+      
   }
 
   try {
