@@ -39,7 +39,6 @@ const validarUsuario = async () => {
 
   if (!token || !id) {
       console.log('Faltan datos en localStorage');
-      
   }
 
   try {
@@ -48,7 +47,7 @@ const validarUsuario = async () => {
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ token, userId: id })
+          body: JSON.stringify({ userId: id })
       });
 
       console.log('Código de respuesta:', response.status);
@@ -58,7 +57,7 @@ const validarUsuario = async () => {
       }
 
       if (response.status === 401) {
-          console.log('Token inválido o usuario no autorizado');
+          console.log('Kgaste');
           handleLogout();
       }
   } catch (error) {
