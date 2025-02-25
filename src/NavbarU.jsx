@@ -32,7 +32,7 @@ const NavbarU = ({ torre, departamento }) => {
 
 const validarUsuario = async () => {
     const token = localStorage.getItem('authToken');
-    const userId = localStorage.getItem('userId');
+    const id = localStorage.getItem('userId');
 
 
     if (!token) return handleLogout();
@@ -44,7 +44,7 @@ const validarUsuario = async () => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ userId })
+            body: JSON.stringify({ id })
         });
 
         if (response.status === 400){
