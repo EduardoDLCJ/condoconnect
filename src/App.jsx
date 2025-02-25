@@ -8,6 +8,7 @@ import Multas from './Multas';
 import InicioU from './InicioU';
 import VerMultas from './VerMultas';
 import Notificaciones from './Notificaciones';
+import Usuario from './Usuario';
 
 const App = () => (
   <Router>  
@@ -19,6 +20,7 @@ const App = () => (
       <Route path="/InicioU" element={<InicioU />} />
       <Route path="/VerMultas" element={<VerMultas />} />
       <Route path="/Notificaciones" element={<Notificaciones />} />
+      <Route path="/Usuario" element={<Usuario />} />
     </Routes>
   </Router>
 );

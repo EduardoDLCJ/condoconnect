@@ -36,7 +36,7 @@
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     background-position: center; /* Centra la imagen */
     width: 350px; /* Ajusta el ancho del logo */
-    height: 340px; /* Ajusta la altura del logo */
+    height: 280px; /* Ajusta la altura del logo */
     margin: 0 auto 20px auto; /* Centra el logo y agrega un margen inferior */
     
   }

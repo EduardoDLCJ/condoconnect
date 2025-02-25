@@ -9,12 +9,50 @@ const Login = ({ onLogin }) => {
   const [showWarning, setShowWarning] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Inicio de sesión";
+    verificarToken();
   }, []);
+
+  const verificarToken = async () => {
+    const token = localStorage.getItem('authToken');
+    const tipoUsuario = localStorage.getItem('userRole');
+    if (!token) return;
+
+    try {
+      const response = await fetch('https://apicondominio-7jd1.onrender.com/login/verificar-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        redirigirUsuario(tipoUsuario);
+      }
+    } catch (error) {
+      console.error('Error verificando token:', error);
+    }
+  };
+
+  const redirigirUsuario = (tipoUsuario) => {
+    switch (tipoUsuario) {
+      case 'Administrador':
+        navigate('/Inicio');
+        break;
+      case 'Dueno':
+        navigate('/InicioU');
+        break;
+      default:
+        localStorage.removeItem('authToken');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,49 +73,35 @@ const Login = ({ onLogin }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ telefono, contrasena: password }),
+        body: JSON.stringify({ telefono, contrasena: password, recordar: rememberMe }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Inicio de sesión exitoso:', data);
         const { token, user } = data;
-      
         if (user && token) {
-          const { tipoUsuario, departamento, torre } = user;
-      
-          localStorage.setItem('departamento', departamento);
-          localStorage.setItem('torre', torre);
-          localStorage.setItem('userRole', tipoUsuario);
-          localStorage.setItem('authToken', token); // Guardar token
-      
-          console.log('tipoUsuario:', tipoUsuario);
-          console.log('token:', token);
-      
-          switch (tipoUsuario) {
-            case 'Administrador':
-              console.log('Redirigiendo a /Inicio');
-              navigate('/Inicio');
-              break;
-            case 'Dueno':
-              console.log('Redirigiendo a /InicioU');
-              navigate('/InicioU');
-              break;
-            default:
-              alert('No tienes permisos para acceder a esta página');
-          }
+          localStorage.setItem('departamento', user.departamento);
+          localStorage.setItem('torre', user.torre);
+          localStorage.setItem('userRole', user.tipoUsuario);
+          localStorage.setItem('authToken', token);
+          localStorage.setItem('userId', user._id);
+          localStorage.setItem('userName', user.nombre);
+          localStorage.setItem('userPhone', user.telefono);
+          localStorage.setItem('userApellido', user.apellido);
+          redirigirUsuario(user.tipoUsuario);
         } else {
           setLoginError('Error en la autenticación, intenta de nuevo');
         }
+      } else {
+        setLoginError('Usuario o contraseña incorrectos');
       }
-    } catch (error) { 
+    } catch (error) {
       console.error('Error al iniciar sesión:', error);
-      setLoginError('Error al iniciar sesión, intenta de nuevo');
-    } finally { 
+      setLoginError('Hubo un problema con el servidor, intenta más tarde');
+    } finally {
       setIsLoading(false);
     }
-
   };
 
   return (
@@ -121,6 +145,21 @@ const Login = ({ onLogin }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="recordar"
+                name="recordar"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label htmlFor="recordar" className="ml-2 text-sm text-gray-700">
+                Recordar
+              </label>
+            </div>
+
             <div className="flex justify-center items-center h-12">
               {isLoading ? (
                 <Lottie animationData={loadingAnimation} className="w-16 h-16" />
