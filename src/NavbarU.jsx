@@ -42,9 +42,8 @@ const validarUsuario = async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ id })
+            body: JSON.stringify({ token, id })
         });
 
         if (response.status === 400){
