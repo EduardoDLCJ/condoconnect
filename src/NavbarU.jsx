@@ -6,10 +6,10 @@ const NavbarU = ({ torre, departamento }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
+  const token = localStorage.getItem('authToken');
 
   // Verificar token
   const verifyToken = async () => {
-    const token = localStorage.getItem('authToken');
     //console.log(token);
     if (!token) return handleLogout();
 
@@ -31,35 +31,42 @@ const NavbarU = ({ torre, departamento }) => {
 };
 
 const validarUsuario = async () => {
-    const token = localStorage.getItem('authToken');
-    const id = localStorage.getItem('userId');
 
+  const id = localStorage.getItem('userId');
 
-    if (!token) return handleLogout();
+  console.log('Token obtenido:', token);
+  console.log('ID obtenido:', id);
 
-    try {
-        const response = await fetch('https://apicondominio-7jd1.onrender.com/login/comparar-token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token, id })
-        });
+  if (!token || !id) {
+      console.log('Faltan datos en localStorage');
+      return handleLogout();
+  }
 
-        if (response.status === 400){
-          console.log("Si");
-        }
+  try {
+      const response = await fetch('https://apicondominio-7jd1.onrender.com/login/comparar-token', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token, userId: id })
+      });
 
-        if (response.status === 401) {
-            console.log("Token inválido o usuario no autorizado.");
-            
-            handleLogout(); // Redirigir al login
-        }
-    } catch (error) {
-        console.error('Error validando usuario:', error);
-        handleLogout();
-    }
+      console.log('Código de respuesta:', response.status);
+
+      if (response.status === 400) {
+          console.log('Solicitud incorrecta');
+      }
+
+      if (response.status === 401) {
+          console.log('Token inválido o usuario no autorizado');
+          handleLogout();
+      }
+  } catch (error) {
+      console.error('Error validando usuario:', error);
+      handleLogout();
+  }
 };
+
 
 useEffect(() => {
     const timeout = setTimeout(() => {
