@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
+import {jwtDecode} from 'jwt-decode';
 import loadingAnimation from './assets/Animation - 1738769995911.json';
 
 const Login = ({ onLogin }) => {
@@ -20,22 +21,12 @@ const Login = ({ onLogin }) => {
 
   const verificarToken = async () => {
     const token = localStorage.getItem('authToken');
-    const tipoUsuario = localStorage.getItem('userRole');
     if (!token) return;
 
     try {
-      const response = await fetch('https://apicondominio-7jd1.onrender.com/login/verificar-token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        redirigirUsuario(tipoUsuario);
-      }
+      const decodedToken = jwtDecode(token);
+      const { tipoUsuario } = decodedToken;
+      redirigirUsuario(tipoUsuario);
     } catch (error) {
       console.error('Error verificando token:', error);
     }
@@ -83,13 +74,16 @@ const Login = ({ onLogin }) => {
         if (user && token) {
           localStorage.setItem('departamento', user.departamento);
           localStorage.setItem('torre', user.torre);
-          localStorage.setItem('userRole', user.tipoUsuario);
           localStorage.setItem('authToken', token);
           localStorage.setItem('userId', user._id);
           localStorage.setItem('userName', user.nombre);
           localStorage.setItem('userPhone', user.telefono);
           localStorage.setItem('userApellido', user.apellido);
-          redirigirUsuario(user.tipoUsuario);
+
+          const decodedToken = jwtDecode(token);
+          const { tipoUsuario } = decodedToken;
+          localStorage.setItem('userRole', tipoUsuario);
+          redirigirUsuario(tipoUsuario);
         } else {
           setLoginError('Error en la autenticación, intenta de nuevo');
         }
@@ -176,12 +170,12 @@ const Login = ({ onLogin }) => {
           </form>
 
           <div className="flex justify-center pt-5 space-x-2">
-            <h1 className="text-sm text-gray-700">¿No tienes una cuenta?</h1>
+            <h1 className="text-sm text-gray-700">¿Olvidaste la tu contraseña?</h1>
             <button
-              onClick={() => navigate('/Registro')}
+              onClick={() => navigate('/Recuperar')}
               className="text-blue-500 hover:underline focus:outline-none"
             >
-              Registrarse
+              Recuperar
             </button>
           </div>
         </div>

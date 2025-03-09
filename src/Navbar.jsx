@@ -70,6 +70,12 @@ const Navbar = () => {
               </a>
             </li>
             <li>
+              <a href="/Respaldar" className="text-cyan-700 hover:text-cyan-950" style={{ fontSize: '1.4rem' }}>
+                Respaldar
+              </a>
+            </li>
+            
+            <li>
               <button
                 onClick={handleLogout}
                 className="text-cyan-700 hover:text-cyan-950"
