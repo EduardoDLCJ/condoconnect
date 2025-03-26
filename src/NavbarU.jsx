@@ -14,7 +14,7 @@ const NavbarU = ({ torre, departamento }) => {
     if (!token) return handleLogout();
 
     try {
-        const response = await fetch('https://apicondominio-7jd1.onrender.com/login/verificar-token', {
+        const response = await fetch('http://localhost:4000/login/verificar-token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const validarUsuario = async () => {
   }
 
   try {
-      const response = await fetch('https://apicondominio-7jd1.onrender.com/login/comparar-token', {
+      const response = await fetch('http://localhost:4000/login/comparar-token', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ useEffect(() => {
 
   const handleDeleteNotification = async (id) => {
     try {
-      const response = await fetch(`https://apicondominio-7jd1.onrender.com/notificaciones/${id}`, { method: 'DELETE' });
+      const response = await fetch(`http://localhost:4000/notificaciones/${id}`, { method: 'DELETE' });
       if (response.ok) {
         setNotifications((prev) => prev.filter((notif) => notif._id !== id));
       }
@@ -113,7 +113,7 @@ useEffect(() => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await fetch(`https://apicondominio-7jd1.onrender.com/notificaciones/${departamento}/${torre}`);
+      const response = await fetch(`http://localhost:4000/notificaciones/${departamento}/${torre}`);
       const data = await response.json();
       if (Array.isArray(data)) setNotifications(data);
     } catch (error) {

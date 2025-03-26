@@ -13,7 +13,7 @@ const VerMultas = () => {
   useEffect(() => {
     if (torre && departamento) {
       // Enviar torre y departamento como parámetros de consulta
-      fetch(`https://apicondominio-7jd1.onrender.com/multas/m/${torre}/${departamento}`)
+      fetch(`http://localhost:4000/multas/m/${torre}/${departamento}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Error al obtener las multas");

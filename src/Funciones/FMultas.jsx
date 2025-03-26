@@ -4,7 +4,7 @@ const FMultas = ({ departamento, torre, onNewMultas }) => {
   useEffect(() => {
     const fetchMultas = async () => {
       try {
-        const response = await fetch(`https://apicondominio-7jd1.onrender.com/notificaciones/${departamento}/${torre}`);
+        const response = await fetch(`http://localhost:4000/notificaciones/${departamento}/${torre}`);
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {

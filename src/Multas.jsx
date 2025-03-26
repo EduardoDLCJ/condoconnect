@@ -20,7 +20,7 @@ const Multas = () => {
   const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
-    fetch("https://apicondominio-7jd1.onrender.com/multas/getmultas")
+    fetch("http://localhost:4000/multas/getmultas")
       .then((response) => response.json())
       .then((data) => setMultas(data))
       .catch((err) => console.error("Error al obtener las multas:", err));
@@ -43,7 +43,7 @@ const Multas = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://apicondominio-7jd1.onrender.com/multas", {
+      const response = await fetch("http://localhost:4000/multas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -6,6 +6,7 @@ const Usuarios = () => {
     const [formData, setFormData] = useState({
         nombre: '',
         apellido: '',
+        correo: '',
         telefono: '',
         departamento: '',
         torre: '',
@@ -30,7 +31,7 @@ const Usuarios = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://apicondominio-7jd1.onrender.com/registro', {
+            const response = await fetch('http://localhost:4000/registro', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -43,6 +44,7 @@ const Usuarios = () => {
             setFormData({
                 nombre: '',
                 apellido: '',
+                correo: '',
                 telefono: '',
                 departamento: '',
                 torre: '',
@@ -50,7 +52,7 @@ const Usuarios = () => {
                 contrasena: ''
             });
             setShowForm(false); 
-            
+            window.location.reload();
         } catch (error) {
             console.error('Error:', error);
         }
@@ -60,7 +62,7 @@ const Usuarios = () => {
         const fetchUsuarios = async () => {
             try {
                 //const token = localStorage.getItem('authToken'); // O como almacenes el token
-                const response = await fetch('https://apicondominio-7jd1.onrender.com/users', {
+                const response = await fetch('http://localhost:4000/users', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -147,6 +149,20 @@ const Usuarios = () => {
                                             type="text"
                                             name="apellido"
                                             value={formData.apellido}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="correo">
+                                            Correo Electrónico
+                                        </label>
+                                        <input
+                                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            id="correo"
+                                            type="email"
+                                            name="correo"
+                                            value={formData.correo}
                                             onChange={handleChange}
                                             required
                                         />
@@ -252,6 +268,7 @@ const Usuarios = () => {
                             <tr>
                                 <th className="py-4 px-6 text-left text-gray-700 font-semibold">Nombre</th>
                                 <th className="py-4 px-6 text-left text-gray-700 font-semibold">Apellido</th>
+                                <th className="py-4 px-6 text-left text-gray-700 font-semibold">Correo</th>
                                 <th className="py-4 px-6 text-left text-gray-700 font-semibold">Teléfono</th>
                                 <th className="py-4 px-6 text-left text-gray-700 font-semibold">Departamento</th>
                                 <th className="py-4 px-6 text-left text-gray-700 font-semibold">Torre</th>
@@ -263,6 +280,7 @@ const Usuarios = () => {
                                 <tr key={index} className="border-b hover:bg-gray-50">
                                     <td className="py-4 px-6">{usuario.nombre}</td>
                                     <td className="py-4 px-6">{usuario.apellido}</td>
+                                    <td className="py-4 px-6">{usuario.correo}</td>
                                     <td className="py-4 px-6">{usuario.telefono}</td>
                                     <td className="py-4 px-6">{usuario.departamento}</td>
                                     <td className="py-4 px-6">{usuario.torre}</td>

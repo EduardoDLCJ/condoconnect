@@ -8,7 +8,7 @@ export default function BackupDB() {
   const handleBackup = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://apicondominio-7jd1.onrender.com/backup");
+      const response = await fetch("http://localhost:4000/backup");
       if (!response.ok) throw new Error("Error al generar el respaldo");
 
       const blob = await response.blob();
