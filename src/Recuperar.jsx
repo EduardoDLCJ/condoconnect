@@ -36,7 +36,7 @@ const Recuperar = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:4000/verificar', {
+            const response = await fetch('https://apicondominio-7jd1.onrender.com/verificar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const Recuperar = () => {
             return;
         }
         try {
-            const response = await fetch('http://localhost:4000/verificar/reset-password', {
+            const response = await fetch('https://apicondominio-7jd1.onrender.com/verificar/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

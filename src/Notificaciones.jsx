@@ -16,7 +16,7 @@ const Notificaciones = () => {
         const fetchNotifications = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:4000/notificaciones/${departamento}/${torre}`
+                    `https://apicondominio-7jd1.onrender.com/notificaciones/${departamento}/${torre}`
                 );
                 const data = await response.json();
 
@@ -38,7 +38,7 @@ const Notificaciones = () => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/notificaciones/${id}`, {
+            const response = await fetch(`https://apicondominio-7jd1.onrender.com/notificaciones/${id}`, {
                 method: 'DELETE',
             });
 

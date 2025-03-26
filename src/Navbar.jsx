@@ -14,7 +14,7 @@ const Navbar = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:4000/login/verificar-token', {
+        const response = await fetch('https://apicondominio-7jd1.onrender.com/login/verificar-token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

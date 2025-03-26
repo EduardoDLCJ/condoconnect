@@ -31,7 +31,7 @@ const Usuarios = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:4000/registro', {
+            const response = await fetch('https://apicondominio-7jd1.onrender.com/registro', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -62,7 +62,7 @@ const Usuarios = () => {
         const fetchUsuarios = async () => {
             try {
                 //const token = localStorage.getItem('authToken'); // O como almacenes el token
-                const response = await fetch('http://localhost:4000/users', {
+                const response = await fetch('https://apicondominio-7jd1.onrender.com/users', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
