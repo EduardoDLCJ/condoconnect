@@ -33,7 +33,7 @@ const Recuperar = () => {
         setConfirmarContrasena(e.target.value);
     };
 
-    const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     try {
         const response = await fetch('https://apicondominio-7jd1.onrender.com/verificar', {
@@ -44,18 +44,24 @@ const Recuperar = () => {
             body: JSON.stringify({ correo }),
         });
 
-        if (!response.ok) {
-            throw new Error('Error sending verification');
-        }
-
         const data = await response.json();
-        alert(data.message);
-        console.log('Verification sent:', data);
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                alert('El correo no está registrado. Verifica e intenta de nuevo.');
+            } else {
+                throw new Error(data.error || 'Error desconocido');
+            }
+        } else {
+            alert(data.message);
+            console.log('Verification sent:', data);
+        }
     } catch (error) {
         console.error('Error sending verification:', error);
-        alert('Error al enviar la verificación');
+        alert(`Error: ${error.message}`);
     }
 };
+
 
     const handleResetPassword = async (e) => {
         e.preventDefault();
