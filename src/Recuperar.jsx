@@ -34,26 +34,28 @@ const Recuperar = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('https://apicondominio-7jd1.onrender.com/verificar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ correo }),
-            });
+    e.preventDefault();
+    try {
+        const response = await fetch('https://apicondominio-7jd1.onrender.com/verificar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ correo }),
+        });
 
-            if (!response.ok) {
-                throw new Error('Error sending verification');
-            }
-
-            const data = await response.json();
-            console.log('Verification sent:', data);
-        } catch (error) {
-            console.error('Error sending verification:', error);
+        if (!response.ok) {
+            throw new Error('Error sending verification');
         }
-    };
+
+        const data = await response.json();
+        alert(data.message);
+        console.log('Verification sent:', data);
+    } catch (error) {
+        console.error('Error sending verification:', error);
+        alert('Error al enviar la verificación');
+    }
+};
 
     const handleResetPassword = async (e) => {
         e.preventDefault();
