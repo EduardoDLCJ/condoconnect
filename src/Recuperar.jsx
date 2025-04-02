@@ -152,7 +152,7 @@ const handleSubmit = async (e) => {
                         <h2 className="text-2xl font-bold text-center text-gray-800">Recuperar Contraseña</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                                <label className="block text-sm font-medium text-gray-700">Correo Electrónico liguado al teléfono</label>
                                 <input
                                     type="email"
                                     value={correo}
